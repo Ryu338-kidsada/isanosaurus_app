@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'features/onboarding/onboarding_page.dart';
+import 'features/auth/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,13 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF7F6EF),
         useMaterial3: true,
       ),
-      home: const OnboardingPage(),
+      home: Builder(
+        builder: (context) => OnboardingPage(
+          onStartExploring: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute<void>(builder: (_) => const LoginPage())),
+        ),
+      ),
     );
   }
 }
