@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'register_page.dart';
+
 /// A local demo form. No credentials are persisted or authenticated.
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -38,6 +40,16 @@ class _LoginPageState extends State<LoginPage> {
     _showMessage(
       'นี่เป็นการเข้าสู่ระบบจำลอง หน้าหลักจะเปิดให้ใช้งานเร็ว ๆ นี้',
     );
+  }
+
+  Future<void> _openRegistration() async {
+    FocusScope.of(context).unfocus();
+    _password.clear();
+    final completed = await Navigator.of(
+      context,
+    ).push<bool>(MaterialPageRoute(builder: (_) => const RegisterPage()));
+    if (!mounted || completed != true) return;
+    _showMessage('ทดลองสมัครสมาชิกสำเร็จ ไม่มีการสร้างบัญชีหรือบันทึกข้อมูล');
   }
 
   InputDecoration _decoration(String hint, {Widget? suffixIcon}) {
@@ -255,9 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 60),
                       Center(
                         child: TextButton(
-                          onPressed: () => _showMessage(
-                            'หน้าสมัครสมาชิกจะเปิดให้ทดลองใช้งานเร็ว ๆ นี้',
-                          ),
+                          onPressed: _openRegistration,
                           child: const Text(
                             'ยังไม่มีบัญชี? สมัครสมาชิก',
                             textAlign: TextAlign.center,
