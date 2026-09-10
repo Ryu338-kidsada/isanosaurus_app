@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../shared/widgets/app_bottom_navigation.dart';
+import '../anatomy/anatomy_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,6 +13,13 @@ class HomePage extends StatelessWidget {
   static const _ink = Color(0xFF183022);
   static const _muted = Color(0xFF627268);
   static const _border = Color(0xFFDCE4DB);
+
+  void _openAnatomy(BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const AnatomyPage()));
+  }
 
   void _comingSoon(BuildContext context, String title) {
     ScaffoldMessenger.of(context)
@@ -142,7 +151,7 @@ class HomePage extends StatelessWidget {
                         final anatomy = _ExploreCard(
                           title: 'กายวิภาค',
                           description: 'เรียนรู้ส่วนต่าง ๆ\nของร่างกาย',
-                          onTap: () => _comingSoon(context, 'กายวิภาค'),
+                          onTap: () => _openAnatomy(context),
                         );
                         final timeline = _ExploreCard(
                           title: 'ไทม์ไลน์',
@@ -207,91 +216,15 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          top: false,
-          minimum: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          child: Center(
-            heightFactor: 1,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 488),
-              child: Material(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22),
-                  side: const BorderSide(color: _border),
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      for (final item in const [
-                        ('⌂', 'หน้าหลัก'),
-                        ('◎', 'กายวิภาค'),
-                        ('◷', 'ไทม์ไลน์'),
-                        ('◈', 'เพิ่มเติม'),
-                      ])
-                        Expanded(
-                          child: Semantics(
-                            selected: item.$2 == 'หน้าหลัก',
-                            button: true,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(16),
-                              onTap: () {
-                                if (item.$2 != 'หน้าหลัก') {
-                                  _comingSoon(context, item.$2);
-                                }
-                              },
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  color: item.$2 == 'หน้าหลัก'
-                                      ? const Color(0xFFE3EDD9)
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 2,
-                                  vertical: 5,
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ExcludeSemantics(
-                                      child: Text(
-                                        item.$1,
-                                        style: TextStyle(
-                                          color: item.$2 == 'หน้าหลัก'
-                                              ? _leaf
-                                              : const Color(0xFF7A8B80),
-                                          fontSize: 18,
-                                          height: 1.2,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      item.$2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: item.$2 == 'หน้าหลัก'
-                                            ? _leaf
-                                            : const Color(0xFF7A8B80),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.4,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+        bottomNavigationBar: AppBottomNavigation(
+          selectedLabel: 'หน้าหลัก',
+          onSelected: (label) {
+            if (label == 'กายวิภาค') {
+              _openAnatomy(context);
+            } else if (label != 'หน้าหลัก') {
+              _comingSoon(context, label);
+            }
+          },
         ),
       ),
     );
