@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'register_page.dart';
+import '../home/home_page.dart';
 
 /// A local demo form. No credentials are persisted or authenticated.
 class LoginPage extends StatefulWidget {
@@ -35,11 +36,16 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() {
     if (!_formKey.currentState!.validate()) return;
+    _openHome();
+  }
+
+  void _openHome() {
     FocusScope.of(context).unfocus();
     _password.clear();
-    _showMessage(
-      'นี่เป็นการเข้าสู่ระบบจำลอง หน้าหลักจะเปิดให้ใช้งานเร็ว ๆ นี้',
-    );
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const HomePage()));
   }
 
   Future<void> _openRegistration() async {
@@ -238,13 +244,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            _password.clear();
-                            _showMessage(
-                              'เลือกเข้าใช้แบบผู้เยี่ยมชมแล้ว หน้าหลักจะเปิดให้ใช้งานเร็ว ๆ นี้',
-                            );
-                          },
+                          onPressed: _openHome,
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size(0, 56),
                             padding: const EdgeInsets.symmetric(

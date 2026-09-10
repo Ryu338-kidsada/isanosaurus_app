@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:isanosaurus/main.dart';
 import 'package:isanosaurus/features/auth/login_page.dart';
+import 'package:isanosaurus/features/home/home_page.dart';
 
 void main() {
   testWidgets('onboarding opens login and back returns to onboarding', (
@@ -50,10 +51,9 @@ void main() {
     await tester.ensureVisible(submit);
     await tester.tap(submit);
     await tester.pumpAndSettle();
-    expect(
-      find.text('นี่เป็นการเข้าสู่ระบบจำลอง หน้าหลักจะเปิดให้ใช้งานเร็ว ๆ นี้'),
-      findsOneWidget,
-    );
+    expect(find.byType(HomePage), findsOneWidget);
+    Navigator.of(tester.element(find.byType(HomePage))).pop();
+    await tester.pumpAndSettle();
     expect(
       tester
           .widget<TextFormField>(find.byType(TextFormField).last)
@@ -80,12 +80,7 @@ void main() {
     await tester.tap(guest);
     await tester.pumpAndSettle();
     expect(find.text('กรุณากรอกอีเมล'), findsNothing);
-    expect(
-      find.text(
-        'เลือกเข้าใช้แบบผู้เยี่ยมชมแล้ว หน้าหลักจะเปิดให้ใช้งานเร็ว ๆ นี้',
-      ),
-      findsOneWidget,
-    );
+    expect(find.byType(HomePage), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
