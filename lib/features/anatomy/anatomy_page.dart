@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../shared/widgets/app_bottom_navigation.dart';
+import '../timeline/timeline_page.dart';
 
 class AnatomyPage extends StatefulWidget {
   const AnatomyPage({super.key});
@@ -69,6 +70,11 @@ class _AnatomyPageState extends State<AnatomyPage> {
   void _navigate(String label) {
     if (label == 'หน้าหลัก') {
       Navigator.of(context).maybePop();
+    } else if (label == 'ไทม์ไลน์') {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(builder: (_) => const TimelinePage()),
+      );
     } else if (label != 'กายวิภาค') {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()

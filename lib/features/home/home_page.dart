@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../shared/widgets/app_bottom_navigation.dart';
 import '../anatomy/anatomy_page.dart';
+import '../timeline/timeline_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,6 +28,13 @@ class HomePage extends StatelessWidget {
       ..showSnackBar(
         SnackBar(content: Text('$title จะเปิดให้ใช้งานเร็ว ๆ นี้')),
       );
+  }
+
+  void _openTimeline(BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const TimelinePage()));
   }
 
   @override
@@ -156,7 +164,7 @@ class HomePage extends StatelessWidget {
                         final timeline = _ExploreCard(
                           title: 'ไทม์ไลน์',
                           description: 'จัดลำดับช่วงเวลา\nอย่างเป็นระบบ',
-                          onTap: () => _comingSoon(context, 'ไทม์ไลน์'),
+                          onTap: () => _openTimeline(context),
                         );
                         if (stacked) {
                           return Column(
@@ -221,6 +229,8 @@ class HomePage extends StatelessWidget {
           onSelected: (label) {
             if (label == 'กายวิภาค') {
               _openAnatomy(context);
+            } else if (label == 'ไทม์ไลน์') {
+              _openTimeline(context);
             } else if (label != 'หน้าหลัก') {
               _comingSoon(context, label);
             }
