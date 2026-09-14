@@ -97,7 +97,7 @@ class _HeroSection extends StatelessWidget {
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: Image.asset(
-                      'assets/images/logo_trexy.png',
+                      'assets/images/logo.png',
                       fit: BoxFit.cover,
                     ),
                   ),

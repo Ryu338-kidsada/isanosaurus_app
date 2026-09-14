@@ -27,6 +27,13 @@ void main() {
         tester.widget<Image>(find.byType(Image)).image,
         const AssetImage(HomePage.dinosaurImageAsset),
       );
+      expect(tester.widget<Image>(find.byType(Image)).fit, BoxFit.contain);
+      final imageSize = tester.getSize(find.byType(Image));
+      expect(imageSize.width / imageSize.height, closeTo(2, 0.01));
+      expect(
+        find.ancestor(of: find.byType(Image), matching: find.byType(ClipOval)),
+        findsNothing,
+      );
       await tester.ensureVisible(find.text('เรื่องน่ารู้'));
       await tester.pumpAndSettle();
       expect(find.text('หน้าหลัก').hitTestable(), findsOneWidget);

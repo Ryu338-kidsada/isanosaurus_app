@@ -8,7 +8,7 @@ import '../more/more_page.dart';
 class AnatomyPage extends StatefulWidget {
   const AnatomyPage({super.key});
 
-  static const imageAsset = 'assets/images/logo_trexy.png';
+  static const imageAsset = 'assets/images/model2d.png';
 
   @override
   State<AnatomyPage> createState() => _AnatomyPageState();
@@ -19,7 +19,7 @@ class _AnatomyPart {
   final String label;
   final String title;
   final String description;
-  // Normalized positions within the illustration area; update with the final art.
+  // Normalized hotspot centers for the landscape model illustration.
   final Offset position;
 }
 
@@ -34,36 +34,36 @@ class _AnatomyPageState extends State<AnatomyPage> {
       'หัว',
       'ศีรษะ',
       'ศีรษะเป็นที่อยู่ของสมอง ตา และปาก ส่วนปากและฟันเกี่ยวข้องกับการกินอาหาร '
-          'ภาพโลโก้นี้ใช้แทนภาพชั่วคราว จึงไม่ใช่รูปร่างศีรษะจริงของอีสานโนซอรัส',
-      Offset(0.80, 0.20),
+          'ภาพโมเดลนี้ใช้ประกอบการเรียนรู้ ไม่ใช่การยืนยันรูปร่างศีรษะจริงของอีสานโนซอรัส',
+      Offset(0.06, 0.20),
     ),
     _AnatomyPart(
       'คอ',
       'คอ',
       'คอเชื่อมศีรษะเข้ากับลำตัว คอยาวเป็นลักษณะเด่นของซอโรพอด '
           'ช่วยให้ศีรษะเข้าถึงพืชได้ในระยะที่กว้างขึ้น',
-      Offset(0.82, 0.48),
+      Offset(0.23, 0.40),
     ),
     _AnatomyPart(
       'ลำตัว',
       'ลำตัว',
       'ลำตัวเป็นส่วนกลางของร่างกาย มีแนวกระดูกสันหลังและซี่โครง '
           'ช่วยพยุงร่างกายและปกป้องอวัยวะภายใน',
-      Offset(0.50, 0.48),
+      Offset(0.43, 0.52),
     ),
     _AnatomyPart(
       'หาง',
       'หาง',
       'หางต่อเนื่องจากแนวกระดูกสันหลังทางด้านท้ายลำตัว '
           'เป็นส่วนหนึ่งที่ช่วยรักษาสมดุลของร่างกายขณะยืนและเคลื่อนที่',
-      Offset(0.16, 0.57),
+      Offset(0.80, 0.56),
     ),
     _AnatomyPart(
       'ขา',
       'ขา',
       'ซอโรพอดเดินด้วยขาทั้งสี่ ขาทำหน้าที่รับน้ำหนักและพาร่างกายเคลื่อนที่ '
           'กระดูกขาจึงเป็นหลักฐานสำคัญในการศึกษาท่าทางและการรองรับน้ำหนัก',
-      Offset(0.53, 0.83),
+      Offset(0.47, 0.84),
     ),
   ];
   int _selected = 0;
@@ -140,38 +140,37 @@ class _AnatomyPageState extends State<AnatomyPage> {
                       child: Column(
                         children: [
                           AspectRatio(
-                            aspectRatio: 350 / 270,
+                            aspectRatio: 2,
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 return Stack(
                                   children: [
-                                    Center(
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.70,
-                                        heightFactor: 0.85,
-                                        child: Center(
-                                          child: AspectRatio(
-                                            aspectRatio: 1,
-                                            child: ClipOval(
-                                              child: Image.asset(
-                                                AnatomyPage.imageAsset,
-                                                fit: BoxFit.cover,
-                                                semanticLabel:
-                                                    'โลโก้จำลอง ไม่ใช่ภาพกายวิภาคจริง',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                    Positioned.fill(
+                                      child: Image.asset(
+                                        AnatomyPage.imageAsset,
+                                        fit: BoxFit.contain,
+                                        semanticLabel:
+                                            'โมเดลไดโนเสาร์อีสานโนซอรัสสำหรับเรียนรู้กายวิภาค',
                                       ),
                                     ),
                                     for (var i = 0; i < _parts.length; i++)
                                       Positioned(
                                         left:
-                                            (constraints.maxWidth - 48) *
-                                            _parts[i].position.dx,
+                                            (constraints.maxWidth *
+                                                        _parts[i].position.dx -
+                                                    24)
+                                                .clamp(
+                                                  0.0,
+                                                  constraints.maxWidth - 48,
+                                                ),
                                         top:
-                                            (constraints.maxHeight - 48) *
-                                            _parts[i].position.dy,
+                                            (constraints.maxHeight *
+                                                        _parts[i].position.dy -
+                                                    24)
+                                                .clamp(
+                                                  0.0,
+                                                  constraints.maxHeight - 48,
+                                                ),
                                         child: Semantics(
                                           selected: _selected == i,
                                           child: SizedBox(
@@ -217,7 +216,7 @@ class _AnatomyPageState extends State<AnatomyPage> {
                             ),
                           ),
                           const Text(
-                            'ภาพและตำแหน่งจุดเลือกเป็นภาพจำลอง',
+                            'ภาพโมเดลประกอบการเรียนรู้ • จุดเลือกแสดงตำแหน่งโดยประมาณ',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: _muted,

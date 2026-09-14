@@ -49,6 +49,22 @@ void main() {
       );
       await tester.pumpAndSettle();
       const labels = ['หัว', 'คอ', 'ลำตัว', 'หาง', 'ขา'];
+      final model = find.byType(Image);
+      expect(
+        tester.widget<Image>(model).image,
+        const AssetImage(AnatomyPage.imageAsset),
+      );
+      expect(tester.widget<Image>(model).fit, BoxFit.contain);
+      final modelSize = tester.getSize(model);
+      expect(modelSize.width / modelSize.height, closeTo(2, 0.01));
+      expect(
+        find.ancestor(of: model, matching: find.byType(ClipOval)),
+        findsNothing,
+      );
+      expect(
+        tester.getCenter(find.byTooltip('จุด 1: หัว')).dx,
+        lessThan(tester.getCenter(find.byTooltip('จุด 4: หาง')).dx),
+      );
       for (var i = 0; i < labels.length; i++) {
         final hotspot = find.byTooltip('จุด ${i + 1}: ${labels[i]}');
         await tester.ensureVisible(hotspot);

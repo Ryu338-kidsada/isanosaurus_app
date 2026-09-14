@@ -8,8 +8,8 @@ import '../more/more_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  // Replace this asset when the final dinosaur illustration is ready.
-  static const dinosaurImageAsset = 'assets/images/logo_trexy.png';
+  // Dinosaur model shown in the home hero card.
+  static const dinosaurImageAsset = 'assets/images/model2d.png';
   static const _bone = Color(0xFFF7F6F0);
   static const _leaf = Color(0xFF2E6A43);
   static const _ink = Color(0xFF183022);
@@ -112,15 +112,13 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Center(
-                            child: ClipOval(
-                              child: Image.asset(
-                                dinosaurImageAsset,
-                                width: 132,
-                                height: 132,
-                                fit: BoxFit.cover,
-                                semanticLabel: 'โลโก้ไดโนเสาร์อีสานโนซอรัส',
-                              ),
+                          AspectRatio(
+                            aspectRatio: 2,
+                            child: Image.asset(
+                              dinosaurImageAsset,
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                              semanticLabel: 'โมเดลไดโนเสาร์อีสานโนซอรัส',
                             ),
                           ),
                           const SizedBox(height: 8),
