@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../shared/widgets/app_bottom_navigation.dart';
 import '../timeline/timeline_page.dart';
+import '../more/more_page.dart';
 
 class AnatomyPage extends StatefulWidget {
   const AnatomyPage({super.key});
@@ -75,12 +76,10 @@ class _AnatomyPageState extends State<AnatomyPage> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(builder: (_) => const TimelinePage()),
       );
-    } else if (label != 'กายวิภาค') {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(content: Text('$label จะเปิดให้ใช้งานเร็ว ๆ นี้')),
-        );
+    } else if (label == 'เพิ่มเติม') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(builder: (_) => const MorePage()),
+      );
     }
   }
 

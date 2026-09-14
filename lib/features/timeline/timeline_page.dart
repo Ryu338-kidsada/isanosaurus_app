@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../shared/widgets/app_bottom_navigation.dart';
 import '../anatomy/anatomy_page.dart';
+import '../more/more_page.dart';
 
 class TimelinePage extends StatelessWidget {
   const TimelinePage({super.key});
@@ -48,11 +49,9 @@ class TimelinePage extends StatelessWidget {
         MaterialPageRoute<void>(builder: (_) => const AnatomyPage()),
       );
     } else if (label == 'เพิ่มเติม') {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(content: Text('เพิ่มเติม จะเปิดให้ใช้งานเร็ว ๆ นี้')),
-        );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(builder: (_) => const MorePage()),
+      );
     }
   }
 

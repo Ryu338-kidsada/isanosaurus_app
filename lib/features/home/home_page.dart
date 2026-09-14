@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../shared/widgets/app_bottom_navigation.dart';
 import '../anatomy/anatomy_page.dart';
 import '../timeline/timeline_page.dart';
+import '../more/more_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -22,12 +23,11 @@ class HomePage extends StatelessWidget {
     ).push(MaterialPageRoute<void>(builder: (_) => const AnatomyPage()));
   }
 
-  void _comingSoon(BuildContext context, String title) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(content: Text('$title จะเปิดให้ใช้งานเร็ว ๆ นี้')),
-      );
+  void _openMore(BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const MorePage()));
   }
 
   void _openTimeline(BuildContext context) {
@@ -232,7 +232,7 @@ class HomePage extends StatelessWidget {
             } else if (label == 'ไทม์ไลน์') {
               _openTimeline(context);
             } else if (label != 'หน้าหลัก') {
-              _comingSoon(context, label);
+              _openMore(context);
             }
           },
         ),

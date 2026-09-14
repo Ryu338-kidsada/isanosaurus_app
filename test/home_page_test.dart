@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isanosaurus/features/home/home_page.dart';
+import 'package:isanosaurus/features/more/more_page.dart';
 
 void main() {
   for (final scale in [1.0, 2.0]) {
@@ -31,7 +32,7 @@ void main() {
       expect(find.text('หน้าหลัก').hitTestable(), findsOneWidget);
       await tester.tap(find.text('เพิ่มเติม'));
       await tester.pumpAndSettle();
-      expect(find.text('เพิ่มเติม จะเปิดให้ใช้งานเร็ว ๆ นี้'), findsOneWidget);
+      expect(find.byType(MorePage), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   }
