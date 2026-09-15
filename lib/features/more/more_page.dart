@@ -7,7 +7,6 @@ import '../timeline/timeline_page.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
-  static const productImageAsset = 'assets/images/logo_trexy.png';
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -21,27 +20,19 @@ class _MorePageState extends State<MorePage> {
   // Mock catalog and quantities exist only while this page is open.
   static const _products = [
     (
-      name: 'ISANOSAURUS Tee',
+      name: 'เสื้อเด็ก ISANOSAURUS',
       category: 'เสื้อ',
-      price: 390,
+      price: 299,
+      unit: 'ตัว',
+      image: 'assets/products/product_dino.png',
       color: Color(0xFFDDE9D2),
     ),
     (
-      name: 'Fossil Pin',
-      category: 'เข็มกลัด',
-      price: 120,
-      color: Color(0xFFE8E2D1),
-    ),
-    (
-      name: 'Cretaceous Card',
-      category: 'โปสการ์ด',
-      price: 80,
-      color: Color(0xFFDDE9D2),
-    ),
-    (
-      name: 'Dino Notebook',
-      category: 'สมุด',
-      price: 149,
+      name: 'ชุดแปรงสีฟันและยาสีฟันเด็ก',
+      category: 'ของใช้',
+      price: 199,
+      unit: 'ชุด',
+      image: 'assets/products/product_dino2.png',
       color: Color(0xFFE8E2D1),
     ),
   ];
@@ -115,9 +106,7 @@ class _MorePageState extends State<MorePage> {
                         for (final category in const [
                           'ทั้งหมด',
                           'เสื้อ',
-                          'เข็มกลัด',
-                          'โปสการ์ด',
-                          'สมุด',
+                          'ของใช้',
                         ])
                           ChoiceChip(
                             label: Text(category),
@@ -169,24 +158,18 @@ class _MorePageState extends State<MorePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        height: 116,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: product.color,
+                                      AspectRatio(
+                                        aspectRatio: 1,
+                                        child: ClipRRect(
                                           borderRadius: BorderRadius.circular(
                                             14,
                                           ),
-                                        ),
-                                        child: Center(
-                                          child: ClipOval(
+                                          child: ColoredBox(
+                                            color: product.color,
                                             child: Image.asset(
-                                              MorePage.productImageAsset,
-                                              width: 88,
-                                              height: 88,
-                                              fit: BoxFit.cover,
-                                              semanticLabel:
-                                                  'ภาพจำลอง ${product.name}',
+                                              product.image,
+                                              fit: BoxFit.contain,
+                                              semanticLabel: product.name,
                                             ),
                                           ),
                                         ),
@@ -205,7 +188,7 @@ class _MorePageState extends State<MorePage> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '฿${product.price}',
+                                              '฿${product.price} / ${product.unit}',
                                               style: const TextStyle(
                                                 color: _leaf,
                                                 fontSize: 14,

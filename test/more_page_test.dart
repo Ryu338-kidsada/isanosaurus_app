@@ -18,20 +18,34 @@ void main() {
   ) async {
     await tester.pumpWidget(const MaterialApp(home: MorePage()));
     await tester.pumpAndSettle();
-    expect(find.byType(Image), findsNWidgets(4));
-    await tapVisible(tester, find.byTooltip('เพิ่ม ISANOSAURUS Tee'));
-    await tapVisible(tester, find.byTooltip('เพิ่ม ISANOSAURUS Tee'));
-    await tapVisible(tester, find.widgetWithText(ChoiceChip, 'เข็มกลัด'));
-    expect(find.text('ISANOSAURUS Tee'), findsNothing);
-    expect(find.text('Fossil Pin'), findsOneWidget);
-    await tapVisible(tester, find.byTooltip('เพิ่ม Fossil Pin'));
-    expect(find.text('เลือกทั้งหมด 3 ชิ้น • ฿900'), findsOneWidget);
-    await tapVisible(tester, find.byTooltip('ลด Fossil Pin'));
-    expect(find.text('เลือกทั้งหมด 2 ชิ้น • ฿780'), findsOneWidget);
+    expect(find.byType(Image), findsNWidgets(2));
+    expect(
+      tester.widgetList<Image>(find.byType(Image)).map((image) => image.image),
+      [
+        const AssetImage('assets/products/product_dino.png'),
+        const AssetImage('assets/products/product_dino2.png'),
+      ],
+    );
+    for (final image in tester.widgetList<Image>(find.byType(Image))) {
+      expect(image.fit, BoxFit.contain);
+    }
+    expect(find.text('฿299 / ตัว'), findsOneWidget);
+    expect(find.text('฿199 / ชุด'), findsOneWidget);
+    await tapVisible(tester, find.byTooltip('เพิ่ม เสื้อเด็ก ISANOSAURUS'));
+    await tapVisible(tester, find.byTooltip('เพิ่ม เสื้อเด็ก ISANOSAURUS'));
+    await tapVisible(tester, find.widgetWithText(ChoiceChip, 'ของใช้'));
+    expect(find.text('เสื้อเด็ก ISANOSAURUS'), findsNothing);
+    expect(find.text('ชุดแปรงสีฟันและยาสีฟันเด็ก'), findsOneWidget);
+    await tapVisible(
+      tester,
+      find.byTooltip('เพิ่ม ชุดแปรงสีฟันและยาสีฟันเด็ก'),
+    );
+    expect(find.text('เลือกทั้งหมด 3 ชิ้น • ฿797'), findsOneWidget);
+    await tapVisible(tester, find.byTooltip('ลด ชุดแปรงสีฟันและยาสีฟันเด็ก'));
+    expect(find.text('เลือกทั้งหมด 2 ชิ้น • ฿598'), findsOneWidget);
     for (final entry in {
-      'เสื้อ': 'ISANOSAURUS Tee',
-      'โปสการ์ด': 'Cretaceous Card',
-      'สมุด': 'Dino Notebook',
+      'เสื้อ': 'เสื้อเด็ก ISANOSAURUS',
+      'ของใช้': 'ชุดแปรงสีฟันและยาสีฟันเด็ก',
     }.entries) {
       await tapVisible(tester, find.widgetWithText(ChoiceChip, entry.key));
       expect(find.text(entry.value), findsOneWidget);
@@ -40,7 +54,7 @@ void main() {
     await tapVisible(tester, find.text('ล้างรายการที่เลือก'));
     expect(find.byKey(const ValueKey('selection-summary')), findsNothing);
     await tapVisible(tester, find.widgetWithText(ChoiceChip, 'ทั้งหมด'));
-    expect(find.byType(Image), findsNWidgets(4));
+    expect(find.byType(Image), findsNWidgets(2));
     expect(tester.takeException(), isNull);
   });
 
@@ -51,7 +65,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('เพิ่มเติม'));
     await tester.pumpAndSettle();
-    await tapVisible(tester, find.byTooltip('เพิ่ม ISANOSAURUS Tee'));
+    await tapVisible(tester, find.byTooltip('เพิ่ม เสื้อเด็ก ISANOSAURUS'));
     for (final label in ['กายวิภาค', 'ไทม์ไลน์']) {
       await tester.tap(find.text(label));
       await tester.pumpAndSettle();
@@ -90,10 +104,13 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tapVisible(tester, find.byTooltip('เพิ่ม Dino Notebook'));
+    await tapVisible(
+      tester,
+      find.byTooltip('เพิ่ม ชุดแปรงสีฟันและยาสีฟันเด็ก'),
+    );
     await tester.ensureVisible(find.byKey(const ValueKey('selection-summary')));
     await tester.pumpAndSettle();
-    expect(find.text('เลือกทั้งหมด 1 ชิ้น • ฿149'), findsOneWidget);
+    expect(find.text('เลือกทั้งหมด 1 ชิ้น • ฿199'), findsOneWidget);
     expect(find.text('หน้าหลัก').hitTestable(), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
