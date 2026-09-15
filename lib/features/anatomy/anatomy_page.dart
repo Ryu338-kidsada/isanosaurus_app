@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../shared/widgets/app_bottom_navigation.dart';
 import '../timeline/timeline_page.dart';
 import '../more/more_page.dart';
+import 'widgets/movement_video_card.dart';
 
 class AnatomyPage extends StatefulWidget {
   const AnatomyPage({super.key});
@@ -298,6 +299,8 @@ class _AnatomyPageState extends State<AnatomyPage> {
                         height: 1.5,
                       ),
                     ),
+                    const SizedBox(height: 28),
+                    const MovementVideoCard(),
                   ],
                 ),
               ),
