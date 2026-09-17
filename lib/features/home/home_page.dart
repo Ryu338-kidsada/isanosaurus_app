@@ -4,8 +4,9 @@ import '../../shared/widgets/app_bottom_navigation.dart';
 import '../anatomy/anatomy_page.dart';
 import '../timeline/timeline_page.dart';
 import '../more/more_page.dart';
+import 'widgets/narration_header.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   // Dinosaur model shown in the home hero card.
@@ -16,7 +17,21 @@ class HomePage extends StatelessWidget {
   static const _muted = Color(0xFF627268);
   static const _border = Color(0xFFDCE4DB);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _narrationKey = GlobalKey<NarrationHeaderState>();
+  static const _bone = HomePage._bone;
+  static const _leaf = HomePage._leaf;
+  static const _ink = HomePage._ink;
+  static const _muted = HomePage._muted;
+  static const _border = HomePage._border;
+  static const dinosaurImageAsset = HomePage.dinosaurImageAsset;
+
   void _openAnatomy(BuildContext context) {
+    _narrationKey.currentState?.close();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     Navigator.of(
       context,
@@ -24,6 +39,7 @@ class HomePage extends StatelessWidget {
   }
 
   void _openMore(BuildContext context) {
+    _narrationKey.currentState?.close();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     Navigator.of(
       context,
@@ -31,6 +47,7 @@ class HomePage extends StatelessWidget {
   }
 
   void _openTimeline(BuildContext context) {
+    _narrationKey.currentState?.close();
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     Navigator.of(
       context,
@@ -135,7 +152,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    const _DinosaurFacts(),
+                    _DinosaurFacts(narrationKey: _narrationKey),
                     const SizedBox(height: 26),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 4),
@@ -240,7 +257,8 @@ class HomePage extends StatelessWidget {
 }
 
 class _DinosaurFacts extends StatelessWidget {
-  const _DinosaurFacts();
+  const _DinosaurFacts({required this.narrationKey});
+  final GlobalKey<NarrationHeaderState> narrationKey;
 
   // Specimen length: https://en.wikipedia.org/wiki/Isanosaurus
   // Discovery: https://abcnews.com/Technology/story?id=119976&page=1
@@ -250,17 +268,7 @@ class _DinosaurFacts extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4),
-          child: Text(
-            'ข้อมูลน่ารู้ในภาพรวม',
-            style: TextStyle(
-              color: HomePage._ink,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
+        NarrationHeader(key: narrationKey),
         const SizedBox(height: 12),
         LayoutBuilder(
           builder: (context, constraints) {
